@@ -1,6 +1,6 @@
 name: steps_indicator
 description: Flutter plugin to display a simple steps indicator line widget.
-version: 0.0.1
+version: 0.1.0
 author: Hugo EXTRAT <extrat.h@gmail.com>
 homepage: https://github.com/huextrat/steps_indicator
 

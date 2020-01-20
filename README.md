@@ -4,7 +4,7 @@ A simple steps indicator widget
 
 ## Installation
 
-Add `steps_indicator: ^0.0.1` in your `pubspec.yaml` dependencies. And import it:
+Add `steps_indicator: ^0.1.0` in your `pubspec.yaml` dependencies. And import it:
 
 ```dart
 import 'package:steps_indicator/steps_indicator.dart';
@@ -18,6 +18,21 @@ Simply create a `StepsIndicator` widget and pass the required params:
 StepsIndicator(
   selectedStep: 1,
   nbSteps: 4
+)
+```
+
+## Params
+
+```dart
+StepsIndicator(
+  selectedStep: 1,
+  nbSteps: 4,
+  selectedStepColorOut: Colors.blue,
+  selectedStepColorIn: Colors.white,
+  doneStepColor: Colors.blue,
+  unselectedStepColor: Colors.red,
+  doneLineColor: Colors.blue,
+  undoneLineColor: Colors.red
 )
 ```
 

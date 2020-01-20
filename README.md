@@ -1,5 +1,7 @@
 # steps_indicator
 
+[![pub package](https://img.shields.io/pub/v/steps_indicator.svg?style=for-the-badge&color=blue)](https://pub.dartlang.org/packages/steps_indicator)
+
 A simple steps indicator widget
 
 ## Installation

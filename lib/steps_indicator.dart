@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 class StepsIndicator extends StatelessWidget {
   final int selectedStep;
   final int nbSteps;
-  final Color selectedStepColor;
+  final Color selectedStepColorOut;
+  final Color selectedStepColorIn;
   final Color doneStepColor;
   final Color unselectedStepColor;
   final Color doneLineColor;
@@ -15,7 +16,8 @@ class StepsIndicator extends StatelessWidget {
       {
         this.selectedStep = 0,
         this.nbSteps = 4,
-        this.selectedStepColor = Colors.blue,
+        this.selectedStepColorOut = Colors.blue,
+        this.selectedStepColorIn = Colors.white,
         this.doneStepColor = Colors.blue,
         this.unselectedStepColor = Colors.blue,
         this.doneLineColor = Colors.blue,
@@ -25,6 +27,8 @@ class StepsIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         for (var i = 0; i < nbSteps; i++) stepBuilder(i),
       ],
@@ -32,15 +36,15 @@ class StepsIndicator extends StatelessWidget {
   }
 
   Widget stepBuilder(int i) {
-    return stepSelected == i
+    return selectedStep == i
         ? Row(
       children: <Widget>[
         stepSelectedWidget(),
-        stepSelected == nbSteps ? stepLineDoneWidget() : Container(),
+        selectedStep == nbSteps ? stepLineDoneWidget() : Container(),
         i != nbSteps-1 ? stepLineUndoneWidget() : Container()
       ],
     )
-        : stepSelected > i ? Row(
+        : selectedStep > i ? Row(
       children: <Widget>[
         stepDoneWidget(),
         stepLineDoneWidget(),
@@ -60,9 +64,9 @@ class StepsIndicator extends StatelessWidget {
         borderRadius: BorderRadius.circular(7),
         child: Container(
             decoration: BoxDecoration(
-                color: Colors.white,
+                color: selectedStepColorIn,
                 borderRadius: BorderRadius.circular(7),
-                border: Border.all(width: 1, color: selectedStepColor)),
+                border: Border.all(width: 1, color: selectedStepColorOut)),
             height: 14,
             width: 14,
             child: Container()),

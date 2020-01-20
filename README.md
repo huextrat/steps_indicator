@@ -27,6 +27,8 @@ For a more detail example please take a look at the `example` folder.
 
 Steps indicator:
 
+<img src="https://raw.githubusercontent.com/huextrat/steps_indicator/master/example/screenshot.png" width="400" height="790">
+
 ## -
 
 If something is missing, feel free to open a ticket or contribute!

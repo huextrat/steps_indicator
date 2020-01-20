@@ -12,17 +12,16 @@ class StepsIndicator extends StatelessWidget {
   final Color doneLineColor;
   final Color undoneLineColor;
 
-  const StepsIndicator(
-      {
-        this.selectedStep = 0,
-        this.nbSteps = 4,
-        this.selectedStepColorOut = Colors.blue,
-        this.selectedStepColorIn = Colors.white,
-        this.doneStepColor = Colors.blue,
-        this.unselectedStepColor = Colors.blue,
-        this.doneLineColor = Colors.blue,
-        this.undoneLineColor = Colors.blue,
-      });
+  const StepsIndicator({
+    this.selectedStep = 0,
+    this.nbSteps = 4,
+    this.selectedStepColorOut = Colors.blue,
+    this.selectedStepColorIn = Colors.white,
+    this.doneStepColor = Colors.blue,
+    this.unselectedStepColor = Colors.blue,
+    this.doneLineColor = Colors.blue,
+    this.undoneLineColor = Colors.blue,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,23 +37,25 @@ class StepsIndicator extends StatelessWidget {
   Widget stepBuilder(int i) {
     return selectedStep == i
         ? Row(
-      children: <Widget>[
-        stepSelectedWidget(),
-        selectedStep == nbSteps ? stepLineDoneWidget() : Container(),
-        i != nbSteps-1 ? stepLineUndoneWidget() : Container()
-      ],
-    )
-        : selectedStep > i ? Row(
-      children: <Widget>[
-        stepDoneWidget(),
-        stepLineDoneWidget(),
-      ],
-    ) : Row(
-      children: <Widget>[
-        stepUnselectedWidget(),
-        i != nbSteps-1 ? stepLineUndoneWidget() : Container()
-      ],
-    );
+            children: <Widget>[
+              stepSelectedWidget(),
+              selectedStep == nbSteps ? stepLineDoneWidget() : Container(),
+              i != nbSteps - 1 ? stepLineUndoneWidget() : Container()
+            ],
+          )
+        : selectedStep > i
+            ? Row(
+                children: <Widget>[
+                  stepDoneWidget(),
+                  stepLineDoneWidget(),
+                ],
+              )
+            : Row(
+                children: <Widget>[
+                  stepUnselectedWidget(),
+                  i != nbSteps - 1 ? stepLineUndoneWidget() : Container()
+                ],
+              );
   }
 
   Widget stepSelectedWidget() {

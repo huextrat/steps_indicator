@@ -11,6 +11,7 @@ class StepsIndicator extends StatelessWidget {
   final Color unselectedStepColor;
   final Color doneLineColor;
   final Color undoneLineColor;
+  final bool isHorizontal;
 
   const StepsIndicator({
     this.selectedStep = 0,
@@ -21,11 +22,18 @@ class StepsIndicator extends StatelessWidget {
     this.unselectedStepColor = Colors.blue,
     this.doneLineColor = Colors.blue,
     this.undoneLineColor = Colors.blue,
+    this.isHorizontal = true
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return isHorizontal ? Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        for (var i = 0; i < nbSteps; i++) stepBuilder(i),
+      ],
+    ) : Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -35,7 +43,7 @@ class StepsIndicator extends StatelessWidget {
   }
 
   Widget stepBuilder(int i) {
-    return selectedStep == i
+    return isHorizontal ? (selectedStep == i
         ? Row(
             children: <Widget>[
               stepSelectedWidget(),
@@ -55,7 +63,27 @@ class StepsIndicator extends StatelessWidget {
                   stepUnselectedWidget(),
                   i != nbSteps - 1 ? stepLineUndoneWidget() : Container()
                 ],
-              );
+              )) : (selectedStep == i
+        ? Column(
+      children: <Widget>[
+        stepSelectedWidget(),
+        selectedStep == nbSteps ? stepLineDoneWidget() : Container(),
+        i != nbSteps - 1 ? stepLineUndoneWidget() : Container()
+      ],
+    )
+        : selectedStep > i
+        ? Column(
+      children: <Widget>[
+        stepDoneWidget(),
+        stepLineDoneWidget(),
+      ],
+    )
+        : Column(
+      children: <Widget>[
+        stepUnselectedWidget(),
+        i != nbSteps - 1 ? stepLineUndoneWidget() : Container()
+      ],
+    ));
   }
 
   Widget stepSelectedWidget() {
@@ -100,10 +128,10 @@ class StepsIndicator extends StatelessWidget {
   }
 
   Widget stepLineDoneWidget() {
-    return Container(height: 1, width: 40, color: doneLineColor);
+    return Container(height: isHorizontal ? 1 : 40, width: isHorizontal ? 40 : 1, color: doneLineColor);
   }
 
   Widget stepLineUndoneWidget() {
-    return Container(height: 1, width: 40, color: undoneLineColor);
+    return Container(height: isHorizontal ? 1 : 40, width: isHorizontal ? 40 : 1, color: undoneLineColor);
   }
 }

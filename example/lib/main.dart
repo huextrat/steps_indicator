@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: StepsIndicator(
-          selectedStep: 2,
+          selectedStep: 3,
           nbSteps: 5,
         )
       ),

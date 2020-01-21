@@ -27,6 +27,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int selectedStep = 0;
+  int nbSteps = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +42,11 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             StepsIndicator(
               selectedStep: selectedStep,
-              nbSteps: 5,
+              nbSteps: nbSteps,
               doneLineColor: Colors.green,
               doneStepColor: Colors.green,
               undoneLineColor: Colors.red,
               unselectedStepColor: Colors.red,
-              doneStepWidget: Container(height: 24, color: Colors.purple, child: Icon(Icons.check, color: Colors.white,),),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,18 +55,22 @@ class _MyHomePageState extends State<MyHomePage> {
                 MaterialButton(
                   color: Colors.red,
                   onPressed: () {
-                    setState(() {
-                      selectedStep--;
-                    });
+                    if(selectedStep > 0) {
+                      setState(() {
+                        selectedStep--;
+                      });
+                    }
                   },
                   child: Text('Prev'),
                 ),
                 MaterialButton(
                   color: Colors.green,
                   onPressed: () {
-                    setState(() {
-                      selectedStep++;
-                    });
+                    if(selectedStep < nbSteps) {
+                      setState(() {
+                        selectedStep++;
+                      });
+                    }
                   },
                   child: Text('Next'),
                 )

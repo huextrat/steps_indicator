@@ -80,7 +80,7 @@ class StepsIndicator extends StatelessWidget {
               ? Row(
                   children: <Widget>[
                     stepDoneWidget(),
-                    stepLineDoneWidget(),
+                    i < nbSteps - 1 ? stepLineDoneWidget() : Container(),
                   ],
                 )
               : Row(
@@ -103,7 +103,7 @@ class StepsIndicator extends StatelessWidget {
               ? Column(
                   children: <Widget>[
                     stepDoneWidget(),
-                    stepLineDoneWidget(),
+                    i < nbSteps - 1 ? stepLineDoneWidget() : Container(),
                   ],
                 )
               : Column(

@@ -17,6 +17,10 @@ class StepsIndicator extends StatelessWidget {
   final double doneStepSize;
   final double unselectedStepSize;
   final double selectedStepSize;
+  final double selectedStepBorderSize;
+  final Widget doneStepWidget;
+  final Widget unselectedStepWidget;
+  final Widget selectedStepWidget;
 
   const StepsIndicator(
       {this.selectedStep = 0,
@@ -32,7 +36,11 @@ class StepsIndicator extends StatelessWidget {
       this.lineThickness = 1,
       this.doneStepSize = 10,
       this.unselectedStepSize = 10,
-      this.selectedStepSize = 14});
+      this.selectedStepSize = 14,
+      this.selectedStepBorderSize = 1,
+      this.doneStepWidget,
+      this.unselectedStepWidget,
+      this.selectedStepWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -110,42 +118,50 @@ class StepsIndicator extends StatelessWidget {
   Widget stepSelectedWidget() {
     return Hero(
       tag: 'selectedStep',
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(7),
-        child: Container(
-            decoration: BoxDecoration(
-                color: selectedStepColorIn,
-                borderRadius: BorderRadius.circular(7),
-                border: Border.all(width: 1, color: selectedStepColorOut)),
-            height: selectedStepSize,
-            width: selectedStepSize,
-            child: Container()),
-      ),
+      child: selectedStepWidget != null
+          ? selectedStepWidget
+          : ClipRRect(
+              borderRadius: BorderRadius.circular(selectedStepSize),
+              child: Container(
+                  decoration: BoxDecoration(
+                      color: selectedStepColorIn,
+                      borderRadius: BorderRadius.circular(selectedStepSize),
+                      border: Border.all(
+                          width: selectedStepBorderSize,
+                          color: selectedStepColorOut)),
+                  height: selectedStepSize,
+                  width: selectedStepSize,
+                  child: Container()),
+            ),
     );
   }
 
   Widget stepDoneWidget() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(5),
-      child: Container(
-        color: doneStepColor,
-        height: doneStepSize,
-        width: doneStepSize,
-        child: Container(),
-      ),
-    );
+    return doneStepWidget != null
+        ? doneStepWidget
+        : ClipRRect(
+            borderRadius: BorderRadius.circular(doneStepSize),
+            child: Container(
+              color: doneStepColor,
+              height: doneStepSize,
+              width: doneStepSize,
+              child: Container(),
+            ),
+          );
   }
 
   Widget stepUnselectedWidget() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(5),
-      child: Container(
-        color: unselectedStepColor,
-        height: unselectedStepSize,
-        width: unselectedStepSize,
-        child: Container(),
-      ),
-    );
+    return unselectedStepWidget != null
+        ? unselectedStepWidget
+        : ClipRRect(
+            borderRadius: BorderRadius.circular(unselectedStepSize),
+            child: Container(
+              color: unselectedStepColor,
+              height: unselectedStepSize,
+              width: unselectedStepSize,
+              child: Container(),
+            ),
+          );
   }
 
   Widget stepLineDoneWidget() {

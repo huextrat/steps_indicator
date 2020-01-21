@@ -46,6 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
               doneStepColor: Colors.green,
               undoneLineColor: Colors.red,
               unselectedStepColor: Colors.red,
+              doneStepWidget: Container(height: 24, color: Colors.purple, child: Icon(Icons.check, color: Colors.white,),),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,

@@ -12,78 +12,97 @@ class StepsIndicator extends StatelessWidget {
   final Color doneLineColor;
   final Color undoneLineColor;
   final bool isHorizontal;
+  final double lineLength;
+  final double doneStepSize;
+  final double unselectedStepSize;
+  final double selectedStepSize;
 
-  const StepsIndicator({
-    this.selectedStep = 0,
-    this.nbSteps = 4,
-    this.selectedStepColorOut = Colors.blue,
-    this.selectedStepColorIn = Colors.white,
-    this.doneStepColor = Colors.blue,
-    this.unselectedStepColor = Colors.blue,
-    this.doneLineColor = Colors.blue,
-    this.undoneLineColor = Colors.blue,
-    this.isHorizontal = true
-  });
+  const StepsIndicator(
+      {this.selectedStep = 0,
+      this.nbSteps = 4,
+      this.selectedStepColorOut = Colors.blue,
+      this.selectedStepColorIn = Colors.white,
+      this.doneStepColor = Colors.blue,
+      this.unselectedStepColor = Colors.blue,
+      this.doneLineColor = Colors.blue,
+      this.undoneLineColor = Colors.blue,
+      this.isHorizontal = true,
+      this.lineLength = 40,
+      this.doneStepSize = 10,
+      this.unselectedStepSize = 10,
+      this.selectedStepSize = 14});
 
   @override
   Widget build(BuildContext context) {
-    return isHorizontal ? Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        for (var i = 0; i < nbSteps; i++) stepBuilder(i),
-      ],
-    ) : Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        for (var i = 0; i < nbSteps; i++) stepBuilder(i),
-      ],
-    );
+    if (isHorizontal) {
+      // Display in Row
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          for (var i = 0; i < nbSteps; i++) stepBuilder(i),
+        ],
+      );
+    } else {
+      // Display in Column
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          for (var i = 0; i < nbSteps; i++) stepBuilder(i),
+        ],
+      );
+    }
   }
 
   Widget stepBuilder(int i) {
-    return isHorizontal ? (selectedStep == i
-        ? Row(
-            children: <Widget>[
-              stepSelectedWidget(),
-              selectedStep == nbSteps ? stepLineDoneWidget() : Container(),
-              i != nbSteps - 1 ? stepLineUndoneWidget() : Container()
-            ],
-          )
-        : selectedStep > i
-            ? Row(
-                children: <Widget>[
-                  stepDoneWidget(),
-                  stepLineDoneWidget(),
-                ],
-              )
-            : Row(
-                children: <Widget>[
-                  stepUnselectedWidget(),
-                  i != nbSteps - 1 ? stepLineUndoneWidget() : Container()
-                ],
-              )) : (selectedStep == i
-        ? Column(
-      children: <Widget>[
-        stepSelectedWidget(),
-        selectedStep == nbSteps ? stepLineDoneWidget() : Container(),
-        i != nbSteps - 1 ? stepLineUndoneWidget() : Container()
-      ],
-    )
-        : selectedStep > i
-        ? Column(
-      children: <Widget>[
-        stepDoneWidget(),
-        stepLineDoneWidget(),
-      ],
-    )
-        : Column(
-      children: <Widget>[
-        stepUnselectedWidget(),
-        i != nbSteps - 1 ? stepLineUndoneWidget() : Container()
-      ],
-    ));
+    if (isHorizontal) {
+      // Display in Row
+      return (selectedStep == i
+          ? Row(
+              children: <Widget>[
+                stepSelectedWidget(),
+                selectedStep == nbSteps ? stepLineDoneWidget() : Container(),
+                i != nbSteps - 1 ? stepLineUndoneWidget() : Container()
+              ],
+            )
+          : selectedStep > i
+              ? Row(
+                  children: <Widget>[
+                    stepDoneWidget(),
+                    stepLineDoneWidget(),
+                  ],
+                )
+              : Row(
+                  children: <Widget>[
+                    stepUnselectedWidget(),
+                    i != nbSteps - 1 ? stepLineUndoneWidget() : Container()
+                  ],
+                ));
+    } else {
+      // Display in Column
+      return (selectedStep == i
+          ? Column(
+              children: <Widget>[
+                stepSelectedWidget(),
+                selectedStep == nbSteps ? stepLineDoneWidget() : Container(),
+                i != nbSteps - 1 ? stepLineUndoneWidget() : Container()
+              ],
+            )
+          : selectedStep > i
+              ? Column(
+                  children: <Widget>[
+                    stepDoneWidget(),
+                    stepLineDoneWidget(),
+                  ],
+                )
+              : Column(
+                  children: <Widget>[
+                    stepUnselectedWidget(),
+                    i != nbSteps - 1 ? stepLineUndoneWidget() : Container()
+                  ],
+                ));
+    }
   }
 
   Widget stepSelectedWidget() {
@@ -96,8 +115,8 @@ class StepsIndicator extends StatelessWidget {
                 color: selectedStepColorIn,
                 borderRadius: BorderRadius.circular(7),
                 border: Border.all(width: 1, color: selectedStepColorOut)),
-            height: 14,
-            width: 14,
+            height: selectedStepSize,
+            width: selectedStepSize,
             child: Container()),
       ),
     );
@@ -108,8 +127,8 @@ class StepsIndicator extends StatelessWidget {
       borderRadius: BorderRadius.circular(5),
       child: Container(
         color: doneStepColor,
-        height: 10,
-        width: 10,
+        height: doneStepSize,
+        width: doneStepSize,
         child: Container(),
       ),
     );
@@ -120,18 +139,24 @@ class StepsIndicator extends StatelessWidget {
       borderRadius: BorderRadius.circular(5),
       child: Container(
         color: unselectedStepColor,
-        height: 10,
-        width: 10,
+        height: unselectedStepSize,
+        width: unselectedStepSize,
         child: Container(),
       ),
     );
   }
 
   Widget stepLineDoneWidget() {
-    return Container(height: isHorizontal ? 1 : 40, width: isHorizontal ? 40 : 1, color: doneLineColor);
+    return Container(
+        height: isHorizontal ? 1 : lineLength,
+        width: isHorizontal ? lineLength : 1,
+        color: doneLineColor);
   }
 
   Widget stepLineUndoneWidget() {
-    return Container(height: isHorizontal ? 1 : 40, width: isHorizontal ? 40 : 1, color: undoneLineColor);
+    return Container(
+        height: isHorizontal ? 1 : lineLength,
+        width: isHorizontal ? lineLength : 1,
+        color: undoneLineColor);
   }
 }

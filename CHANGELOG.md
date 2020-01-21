@@ -1,3 +1,7 @@
+## [0.2.2] - 2020-01-20
+
+Line thickness param is now available
+
 ## [0.2.1] - 2020-01-20
 
 New params available

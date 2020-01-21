@@ -13,6 +13,7 @@ class StepsIndicator extends StatelessWidget {
   final Color undoneLineColor;
   final bool isHorizontal;
   final double lineLength;
+  final double lineThickness;
   final double doneStepSize;
   final double unselectedStepSize;
   final double selectedStepSize;
@@ -28,6 +29,7 @@ class StepsIndicator extends StatelessWidget {
       this.undoneLineColor = Colors.blue,
       this.isHorizontal = true,
       this.lineLength = 40,
+      this.lineThickness = 1,
       this.doneStepSize = 10,
       this.unselectedStepSize = 10,
       this.selectedStepSize = 14});
@@ -148,15 +150,15 @@ class StepsIndicator extends StatelessWidget {
 
   Widget stepLineDoneWidget() {
     return Container(
-        height: isHorizontal ? 1 : lineLength,
-        width: isHorizontal ? lineLength : 1,
+        height: isHorizontal ? lineThickness : lineLength,
+        width: isHorizontal ? lineLength : lineThickness,
         color: doneLineColor);
   }
 
   Widget stepLineUndoneWidget() {
     return Container(
-        height: isHorizontal ? 1 : lineLength,
-        width: isHorizontal ? lineLength : 1,
+        height: isHorizontal ? lineThickness : lineLength,
+        width: isHorizontal ? lineLength : lineThickness,
         color: undoneLineColor);
   }
 }

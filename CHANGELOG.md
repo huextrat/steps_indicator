@@ -1,3 +1,7 @@
+## [1.0.1] - 2020-06-27
+
+You are now able to add multiple steps indicator
+
 ## [1.0.0] - 2020-06-16
 
 Custom line length between steps

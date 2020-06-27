@@ -118,24 +118,20 @@ class StepsIndicator extends StatelessWidget {
   }
 
   Widget stepSelectedWidget() {
-    return Hero(
-      tag: 'selectedStep',
-      child: selectedStepWidget != null
-          ? selectedStepWidget
-          : ClipRRect(
-              borderRadius: BorderRadius.circular(selectedStepSize),
-              child: Container(
-                  decoration: BoxDecoration(
-                      color: selectedStepColorIn,
-                      borderRadius: BorderRadius.circular(selectedStepSize),
-                      border: Border.all(
-                          width: selectedStepBorderSize,
-                          color: selectedStepColorOut)),
-                  height: selectedStepSize,
-                  width: selectedStepSize,
-                  child: Container()),
-            ),
-    );
+    return selectedStepWidget != null
+        ? selectedStepWidget
+        : ClipRRect(
+            borderRadius: BorderRadius.circular(selectedStepSize),
+            child: Container(
+                decoration: BoxDecoration(
+                    color: selectedStepColorIn,
+                    borderRadius: BorderRadius.circular(selectedStepSize),
+                    border: Border.all(
+                        width: selectedStepBorderSize,
+                        color: selectedStepColorOut)),
+                height: selectedStepSize,
+                width: selectedStepSize,
+                child: Container()));
   }
 
   Widget stepDoneWidget() {

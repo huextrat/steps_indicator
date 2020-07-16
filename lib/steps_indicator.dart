@@ -1,8 +1,9 @@
 library steps_indicator;
 
 import 'package:flutter/material.dart';
+import 'package:steps_indicator/linear_painter.dart';
 
-class StepsIndicator extends StatelessWidget {
+class StepsIndicator extends StatefulWidget {
   final int selectedStep;
   final int nbSteps;
   final Color selectedStepColorOut;
@@ -57,14 +58,83 @@ class StepsIndicator extends StatelessWidget {
       this.lineLengthCustomStep});
 
   @override
+  _StepsIndicatorState createState() => _StepsIndicatorState();
+}
+
+class _StepsIndicatorState extends State<StepsIndicator> with TickerProviderStateMixin {
+  AnimationController _animationControllerToNext;
+  Animation _animationToNext;
+  double _percentToNext = 0;
+
+  AnimationController _animationControllerToPrevious;
+  Animation _animationToPrevious;
+  double _percentToPrevious = 1;
+
+  bool isPreviousStep = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationControllerToNext = AnimationController(
+        duration: const Duration(milliseconds: 400),
+        vsync: this
+    );
+    _animationControllerToPrevious = AnimationController(
+        duration: const Duration(milliseconds: 400),
+        vsync: this
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationControllerToNext.dispose();
+    _animationControllerToPrevious.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(StepsIndicator oldWidget) {
+    if (widget.selectedStep > oldWidget.selectedStep) {
+      _animationControllerToNext.reset();
+      setState(() {
+        _animationToNext = Tween(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(parent: _animationControllerToNext, curve: Curves.linear),
+        )..addListener(() {
+          setState(() {
+            _percentToNext = _animationToNext.value;
+          });
+        });
+        _animationControllerToNext.forward();
+      });
+    } else if (widget.selectedStep < oldWidget.selectedStep) {
+      _animationControllerToPrevious.reset();
+      setState(() {
+        isPreviousStep = true;
+        _animationToPrevious = Tween(begin: 1.0, end: 0.0).animate(
+          CurvedAnimation(parent: _animationControllerToPrevious, curve: Curves.linear),
+        )..addListener(() {
+          setState(() {
+            _percentToPrevious = _animationToPrevious.value;
+          });
+          if (_animationControllerToPrevious.isCompleted) {
+            isPreviousStep = false;
+          }
+        });
+        _animationControllerToPrevious.forward();
+      });
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (isHorizontal) {
+    if (widget.isHorizontal) {
       // Display in Row
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          for (var i = 0; i < nbSteps; i++) stepBuilder(i),
+          for (var i = 0; i < widget.nbSteps; i++) stepBuilder(i),
         ],
       );
     } else {
@@ -73,134 +143,151 @@ class StepsIndicator extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          for (var i = 0; i < nbSteps; i++) stepBuilder(i),
+          for (var i = 0; i < widget.nbSteps; i++) stepBuilder(i),
         ],
       );
     }
   }
 
   Widget stepBuilder(int i) {
-    if (isHorizontal) {
+    if (widget.isHorizontal) {
       // Display in Row
-      return (selectedStep == i
+      return widget.selectedStep == i
           ? Row(
               children: <Widget>[
                 stepSelectedWidget(),
-                selectedStep == nbSteps ? stepLineDoneWidget(i) : Container(),
-                i != nbSteps - 1 ? stepLineUndoneWidget(i) : Container()
+                widget.selectedStep == widget.nbSteps ? stepLineDoneWidget(i) : Container(),
+                i != widget.nbSteps - 1 ? stepLineUndoneWidget(i) : Container()
               ],
             )
-          : selectedStep > i
+          : widget.selectedStep > i
               ? Row(
                   children: <Widget>[
                     stepDoneWidget(),
-                    i < nbSteps - 1 ? stepLineDoneWidget(i) : Container(),
+                    i < widget.nbSteps - 1 ? stepLineDoneWidget(i) : Container(),
                   ],
                 )
               : Row(
                   children: <Widget>[
                     stepUnselectedWidget(),
-                    i != nbSteps - 1 ? stepLineUndoneWidget(i) : Container()
+                    i != widget.nbSteps - 1 ? stepLineUndoneWidget(i) : Container()
                   ],
-                ));
+                );
     } else {
       // Display in Column
-      return (selectedStep == i
+      return widget.selectedStep == i
           ? Column(
               children: <Widget>[
                 stepSelectedWidget(),
-                selectedStep == nbSteps ? stepLineDoneWidget(i) : Container(),
-                i != nbSteps - 1 ? stepLineUndoneWidget(i) : Container()
+                widget.selectedStep == widget.nbSteps ? stepLineDoneWidget(i) : Container(),
+                i != widget.nbSteps - 1 ? stepLineUndoneWidget(i) : Container()
               ],
             )
-          : selectedStep > i
+          : widget.selectedStep > i
               ? Column(
                   children: <Widget>[
                     stepDoneWidget(),
-                    i < nbSteps - 1 ? stepLineDoneWidget(i) : Container(),
+                    i < widget.nbSteps - 1 ? stepLineDoneWidget(i) : Container(),
                   ],
                 )
               : Column(
                   children: <Widget>[
                     stepUnselectedWidget(),
-                    i != nbSteps - 1 ? stepLineUndoneWidget(i) : Container()
+                    i != widget.nbSteps - 1 ? stepLineUndoneWidget(i) : Container()
                   ],
-                ));
+                );
     }
   }
 
   Widget stepSelectedWidget() {
-    return selectedStepWidget != null
-        ? selectedStepWidget
-        : ClipRRect(
-            borderRadius: BorderRadius.circular(selectedStepSize),
+    return widget.selectedStepWidget ?? ClipRRect(
+            borderRadius: BorderRadius.circular(widget.selectedStepSize),
             child: Container(
                 decoration: BoxDecoration(
-                    color: selectedStepColorIn,
-                    borderRadius: BorderRadius.circular(selectedStepSize),
+                    color: widget.selectedStepColorIn,
+                    borderRadius: BorderRadius.circular(widget.selectedStepSize),
                     border: Border.all(
-                        width: selectedStepBorderSize,
-                        color: selectedStepColorOut)),
-                height: selectedStepSize,
-                width: selectedStepSize,
+                        width: widget.selectedStepBorderSize,
+                        color: widget.selectedStepColorOut)),
+                height: widget.selectedStepSize,
+                width: widget.selectedStepSize,
                 child: Container()));
   }
 
   Widget stepDoneWidget() {
-    return doneStepWidget != null
-        ? doneStepWidget
-        : ClipRRect(
-            borderRadius: BorderRadius.circular(doneStepSize),
+    return widget.doneStepWidget ?? ClipRRect(
+            borderRadius: BorderRadius.circular(widget.doneStepSize),
             child: Container(
-              color: doneStepColor,
-              height: doneStepSize,
-              width: doneStepSize,
+              color: widget.doneStepColor,
+              height: widget.doneStepSize,
+              width: widget.doneStepSize,
               child: Container(),
             ),
           );
   }
 
   Widget stepUnselectedWidget() {
-    return unselectedStepWidget != null
-        ? unselectedStepWidget
-        : ClipRRect(
-            borderRadius: BorderRadius.circular(unselectedStepSize),
+    return widget.unselectedStepWidget ?? ClipRRect(
+            borderRadius: BorderRadius.circular(widget.unselectedStepSize),
             child: Container(
-                decoration: BoxDecoration(
-                    color: unselectedStepColorIn,
-                    borderRadius: BorderRadius.circular(unselectedStepSize),
-                    border: Border.all(
-                        width: unselectedStepBorderSize,
-                        color: unselectedStepColorOut)),
-                height: unselectedStepSize,
-                width: unselectedStepSize,
-                child: Container()));
+                    color: widget.unselectedStepColorIn,
+                        color: widget.unselectedStepColorOut)),
+                height: widget.unselectedStepSize,
+                width: widget.unselectedStepSize,
+              color: widget.unselectedStepColor,
+              height: widget.unselectedStepSize,
+              width: widget.unselectedStepSize,
+              child: Container(),
+            ),
+          );
   }
 
   Widget stepLineDoneWidget(int i) {
     return Container(
-        height: isHorizontal ? doneLineThickness : getLineLength(i),
-        width: isHorizontal ? getLineLength(i) : doneLineThickness,
-        color: doneLineColor);
+      height: widget.isHorizontal ? widget.lineThickness : getLineLength(i),
+      width: widget.isHorizontal ? getLineLength(i) : widget.lineThickness,
+      child: CustomPaint(
+        painter: LinearPainter(
+            progress: widget.selectedStep == i + 1 ? _percentToNext : 1,
+            progressColor: widget.doneLineColor,
+            backgroundColor: widget.undoneLineColor,
+            lineThickness: widget.lineThickness
+        ),
+      ),
+    );
   }
 
   Widget stepLineUndoneWidget(int i) {
+    if (isPreviousStep && widget.selectedStep == i) {
+      return Container(
+        height: widget.isHorizontal ? widget.lineThickness : getLineLength(i),
+        width: widget.isHorizontal ? getLineLength(i) : widget.lineThickness,
+        child: CustomPaint(
+          painter: LinearPainter(
+              progress: _percentToPrevious,
+              progressColor: widget.doneLineColor,
+              backgroundColor: widget.undoneLineColor,
+              lineThickness: widget.lineThickness
+          ),
+        ),
+      );
+    }
     return Container(
-        height: isHorizontal ? undoneLineThickness : getLineLength(i),
-        width: isHorizontal ? getLineLength(i) : undoneLineThickness,
-        color: undoneLineColor);
+        height: widget.isHorizontal ? widget.lineThickness : getLineLength(i),
+        width: widget.isHorizontal ? getLineLength(i) : widget.lineThickness,
+        color: widget.undoneLineColor);
   }
 
   double getLineLength(int i) {
-    var nbStep = i + 1;
-    if (lineLengthCustomStep != null && lineLengthCustomStep.length > 0) {
-      if (lineLengthCustomStep.any((it) => (it.nbStep - 1) == nbStep)) {
-        return lineLengthCustomStep
+    final nbStep = i + 1;
+    if (widget.lineLengthCustomStep != null && widget.lineLengthCustomStep.isNotEmpty) {
+      if (widget.lineLengthCustomStep.any((it) => (it.nbStep - 1) == nbStep)) {
+        return widget.lineLengthCustomStep
             .firstWhere((it) => (it.nbStep - 1) == nbStep)
             .lenght;
       }
     }
-    return lineLength;
+    return widget.lineLength;
   }
 }
 

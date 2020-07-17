@@ -47,12 +47,14 @@ class _MyHomePageState extends State<MyHomePage> {
               doneStepColor: Colors.green,
               undoneLineColor: Colors.red,
               unselectedStepColor: Colors.red,
-              lineLength: 20,
+              lineLength: 10,
               lineThickness: 2,
               lineLengthCustomStep: [
                 StepsIndicatorCustomLine(nbStep: 4, lenght: 105)
               ],
-              enableAnimation: true,
+              enableStepAnimation: true,
+              enableLineAnimation: true,
+              isHorizontal: true,
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,

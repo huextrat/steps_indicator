@@ -78,7 +78,7 @@ class _StepsIndicatorState extends State<StepsIndicator> with TickerProviderStat
   double _percentToPrevious = 1;
 
   /// Step animation
-  AnimationController _animationControllerSelectedStep;
+  AnimationController _animationControllerStep;
 
   @override
   void initState() {
@@ -91,7 +91,7 @@ class _StepsIndicatorState extends State<StepsIndicator> with TickerProviderStat
         duration: const Duration(milliseconds: 400),
         vsync: this
     );
-    _animationControllerSelectedStep = AnimationController(
+    _animationControllerStep = AnimationController(
         duration: const Duration(milliseconds: 400),
         vsync: this
     );
@@ -107,7 +107,7 @@ class _StepsIndicatorState extends State<StepsIndicator> with TickerProviderStat
   @override
   void didUpdateWidget(StepsIndicator oldWidget) {
     if (widget.enableStepAnimation) {
-      _animationControllerSelectedStep.reset();
+      _animationControllerStep.reset();
       if (widget.selectedStep < oldWidget.selectedStep) {
         setState(() {
           isPreviousStep = true;
@@ -240,28 +240,29 @@ class _StepsIndicatorState extends State<StepsIndicator> with TickerProviderStat
 
   Widget stepSelectedWidget(int i) {
     if (widget.selectedStep == i && (i != 0 || isPreviousStep)) {
-      final Animation<Offset> _offsetFloat = widget.isHorizontal ?
-        Tween<Offset>(begin: isPreviousStep ? const Offset(1, 0) : const Offset(-1, 0), end: Offset.zero)
-          .animate(_animationControllerSelectedStep)
-      : Tween<Offset>(begin: isPreviousStep ? const Offset(0, 1) : const Offset(0, -1), end: Offset.zero)
-        .animate(_animationControllerSelectedStep);
+      _animationControllerStep.forward();
 
-      _animationControllerSelectedStep.forward();
-
-      return SlideTransition(
-        position: _offsetFloat,
-        child: widget.selectedStepWidget ?? ClipRRect(
-            borderRadius: BorderRadius.circular(widget.selectedStepSize),
-            child: Container(
-                decoration: BoxDecoration(
-                    color: widget.selectedStepColorIn,
-                    borderRadius: BorderRadius.circular(widget.selectedStepSize),
-                    border: Border.all(
-                        width: widget.selectedStepBorderSize,
-                        color: widget.selectedStepColorOut)),
-                height: widget.selectedStepSize,
-                width: widget.selectedStepSize,
-                child: Container()))
+      return AnimatedBuilder(
+        animation: _animationControllerStep,
+        builder: (BuildContext context, Widget child) {
+          final size = widget.selectedStepSize * _animationControllerStep.value;
+          return Container(
+            width: size,
+            height: size,
+            child: widget.selectedStepWidget ?? ClipRRect(
+                borderRadius: BorderRadius.circular(widget.selectedStepSize),
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: widget.selectedStepColorIn,
+                        borderRadius: BorderRadius.circular(widget.selectedStepSize),
+                        border: Border.all(
+                            width: widget.selectedStepBorderSize,
+                            color: widget.selectedStepColorOut)),
+                    height: widget.selectedStepSize,
+                    width: widget.selectedStepSize,
+                    child: Container())),
+          );
+        },
       );
     }
 

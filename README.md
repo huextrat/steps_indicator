@@ -27,6 +27,8 @@ Do not forget to check that the selectedStep is not lower than 0 and is not high
 
 ## Params
 
+> Animations are disabled by default if you want to enable them remember to pass properties to true.
+
 ```dart
 StepsIndicator(
   selectedStep: 1,
@@ -49,7 +51,9 @@ StepsIndicator(
   selectedStepWidget: Container(), // Custom Widget 
   lineLengthCustomStep: [
     StepsIndicatorCustomLine(nbStep: 3, lenght: 80)
-  ]
+  ],
+  enableLineAnimation: true,
+  enableStepAnimation: true,
 )
 ```
 

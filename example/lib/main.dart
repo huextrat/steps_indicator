@@ -50,11 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
               lineLength: 10,
               lineThickness: 2,
               lineLengthCustomStep: [
-                StepsIndicatorCustomLine(nbStep: 4, lenght: 105)
+                StepsIndicatorCustomLine(nbStep: 4, length: 105)
               ],
-              enableStepAnimation: true,
               enableLineAnimation: true,
-              isHorizontal: true,
+              enableStepAnimation: true,
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,

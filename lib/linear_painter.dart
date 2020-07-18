@@ -19,7 +19,9 @@ class LinearPainter extends CustomPainter {
     _paintBackground.style = PaintingStyle.stroke;
     _paintBackground.strokeWidth = lineThickness;
 
-    _paintLine.color = progress.toString() == '0.0' ? progressColor.withOpacity(0.0) : progressColor;
+    _paintLine.color = progress.toString() == '0.0'
+        ? progressColor.withOpacity(0.0)
+        : progressColor;
     _paintLine.style = PaintingStyle.stroke;
     _paintLine.strokeWidth = lineThickness;
 

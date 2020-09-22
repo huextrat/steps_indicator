@@ -36,53 +36,51 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            StepsIndicator(
-              selectedStep: selectedStep,
-              nbSteps: nbSteps,
-              doneLineColor: Colors.green,
-              doneStepColor: Colors.green,
-              undoneLineColor: Colors.red,
-              unselectedStepColor: Colors.red,
-              lineLength: 20,
-              lineLengthCustomStep: [
-                StepsIndicatorCustomLine(nbStep: 4, lenght: 105)
-              ],
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                MaterialButton(
-                  color: Colors.red,
-                  onPressed: () {
-                    if(selectedStep > 0) {
-                      setState(() {
-                        selectedStep--;
-                      });
-                    }
-                  },
-                  child: Text('Prev'),
-                ),
-                MaterialButton(
-                  color: Colors.green,
-                  onPressed: () {
-                    if(selectedStep < nbSteps) {
-                      setState(() {
-                        selectedStep++;
-                      });
-                    }
-                  },
-                  child: Text('Next'),
-                )
-              ],
-            )
-          ],
-        )
-      ),
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          StepsIndicator(
+            selectedStep: selectedStep,
+            nbSteps: nbSteps,
+            doneLineColor: Colors.green,
+            doneStepColor: Colors.green,
+            undoneLineColor: Colors.red,
+            lineLength: 20,
+            lineLengthCustomStep: [
+              StepsIndicatorCustomLine(nbStep: 4, lenght: 105)
+            ],
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              MaterialButton(
+                color: Colors.red,
+                onPressed: () {
+                  if (selectedStep > 0) {
+                    setState(() {
+                      selectedStep--;
+                    });
+                  }
+                },
+                child: Text('Prev'),
+              ),
+              MaterialButton(
+                color: Colors.green,
+                onPressed: () {
+                  if (selectedStep < nbSteps) {
+                    setState(() {
+                      selectedStep++;
+                    });
+                  }
+                },
+                child: Text('Next'),
+              )
+            ],
+          )
+        ],
+      )),
     );
   }
 }

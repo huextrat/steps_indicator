@@ -1,3 +1,11 @@
+## [1.1.0] - 2020-09-22
+
+Add custom line thickness & borderSize
+
+*BREAKING CHANGES:*
+- `lineThickness` --> `doneLineThickness` & `undoneLineThickness`
+- `unselectedStepColor` --> `unselectedStepColorOut` & `unselectedStepColorIn`
+
 ## [1.0.1] - 2020-06-27
 
 You are now able to add multiple steps indicator

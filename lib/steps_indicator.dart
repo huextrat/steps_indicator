@@ -8,16 +8,25 @@ class StepsIndicator extends StatelessWidget {
   final Color selectedStepColorOut;
   final Color selectedStepColorIn;
   final Color doneStepColor;
-  final Color unselectedStepColor;
+
+  //Step colors for unselected in and out
+  final Color unselectedStepColorOut;
+  final Color unselectedStepColorIn;
   final Color doneLineColor;
   final Color undoneLineColor;
   final bool isHorizontal;
   final double lineLength;
-  final double lineThickness;
+
+  //Line thickness for done and Undone
+  final double doneLineThickness;
+  final double undoneLineThickness;
   final double doneStepSize;
   final double unselectedStepSize;
   final double selectedStepSize;
   final double selectedStepBorderSize;
+
+  //Border size for unselectedStep
+  final double unselectedStepBorderSize;
   final Widget doneStepWidget;
   final Widget unselectedStepWidget;
   final Widget selectedStepWidget;
@@ -29,16 +38,19 @@ class StepsIndicator extends StatelessWidget {
       this.selectedStepColorOut = Colors.blue,
       this.selectedStepColorIn = Colors.white,
       this.doneStepColor = Colors.blue,
-      this.unselectedStepColor = Colors.blue,
+      this.unselectedStepColorOut = Colors.blue,
+      this.unselectedStepColorIn = Colors.blue,
       this.doneLineColor = Colors.blue,
       this.undoneLineColor = Colors.blue,
       this.isHorizontal = true,
       this.lineLength = 40,
-      this.lineThickness = 1,
+      this.doneLineThickness = 1,
+      this.undoneLineThickness = 1,
       this.doneStepSize = 10,
       this.unselectedStepSize = 10,
       this.selectedStepSize = 14,
       this.selectedStepBorderSize = 1,
+      this.unselectedStepBorderSize = 1,
       this.doneStepWidget,
       this.unselectedStepWidget,
       this.selectedStepWidget,
@@ -154,25 +166,28 @@ class StepsIndicator extends StatelessWidget {
         : ClipRRect(
             borderRadius: BorderRadius.circular(unselectedStepSize),
             child: Container(
-              color: unselectedStepColor,
-              height: unselectedStepSize,
-              width: unselectedStepSize,
-              child: Container(),
-            ),
-          );
+                decoration: BoxDecoration(
+                    color: unselectedStepColorIn,
+                    borderRadius: BorderRadius.circular(unselectedStepSize),
+                    border: Border.all(
+                        width: unselectedStepBorderSize,
+                        color: unselectedStepColorOut)),
+                height: unselectedStepSize,
+                width: unselectedStepSize,
+                child: Container()));
   }
 
   Widget stepLineDoneWidget(int i) {
     return Container(
-        height: isHorizontal ? lineThickness : getLineLength(i),
-        width: isHorizontal ? getLineLength(i) : lineThickness,
+        height: isHorizontal ? doneLineThickness : getLineLength(i),
+        width: isHorizontal ? getLineLength(i) : doneLineThickness,
         color: doneLineColor);
   }
 
   Widget stepLineUndoneWidget(int i) {
     return Container(
-        height: isHorizontal ? lineThickness : getLineLength(i),
-        width: isHorizontal ? getLineLength(i) : lineThickness,
+        height: isHorizontal ? undoneLineThickness : getLineLength(i),
+        width: isHorizontal ? getLineLength(i) : undoneLineThickness,
         color: undoneLineColor);
   }
 

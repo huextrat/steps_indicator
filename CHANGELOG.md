@@ -1,3 +1,9 @@
+## [1.2.0] - 2021-02-17
+
+- You can now activate animations (`enableStepAnimation` & `enableLineAnimation`) for a more dynamic and prettier rendering.
+
+By default the animation is disabled
+
 ## [1.1.0] - 2020-09-22
 
 Add custom line thickness & borderSize
@@ -8,30 +14,34 @@ Add custom line thickness & borderSize
 
 ## [1.0.1] - 2020-06-27
 
-You are now able to add multiple steps indicator
+    * You can now activate animations (`enableStepAnimation` & `enableLineAnimation`) for a more dynamic and prettier rendering.
 
-## [1.0.0] - 2020-06-16
+## 1.0.1
 
-Custom line length between steps
+    * You are now able to add multiple steps indicator
 
-## [0.3.1] - 2020-01-21
+## 1.0.0
 
-Fix issue
+    * Custom line length between steps
 
-## [0.3.0] - 2020-01-21
+## 0.3.1
 
-Use your own widget to design the step (done, selected, unselected) widget.
-Fix issue with custom step size.
-Set your own selected step border size.
+    * Fix issue
 
-## [0.2.2] - 2020-01-21
+## 0.3.0
 
-Line thickness param is now available
+    * Use your own widget to design the step (done, selected, unselected) widget.
+    * Fix issue with custom step size.
+    * Set your own selected step border size.
 
-## [0.2.1] - 2020-01-21
+## 0.2.2
 
-New params available
+    * Line thickness param is now available
 
-## [0.2.0] - 2020-01-20
+## 0.2.1
 
-Vertical steps indicator now available
+    * New params available
+
+## 0.2.0
+
+    * Vertical steps indicator now available

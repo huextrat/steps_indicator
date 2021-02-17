@@ -46,9 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
               doneLineColor: Colors.green,
               doneStepColor: Colors.green,
               undoneLineColor: Colors.red,
-              unselectedStepColor: Colors.red,
               lineLength: 10,
-              lineThickness: 2,
               lineLengthCustomStep: [
                 StepsIndicatorCustomLine(nbStep: 4, length: 105)
               ],

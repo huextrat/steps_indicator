@@ -1,6 +1,8 @@
-## 1.2.0 - 2021-02-17
+## [1.2.0] - 2021-02-17
 
-    * You can now activate animations (`enableStepAnimation` & `enableLineAnimation`) for a more dynamic and prettier rendering.
+- You can now activate animations (`enableStepAnimation` & `enableLineAnimation`) for a more dynamic and prettier rendering.
+
+By default the animation is disabled
 
 ## [1.1.0] - 2020-09-22
 

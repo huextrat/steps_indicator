@@ -10,10 +10,10 @@ class LinearPainter extends CustomPainter {
   final Color backgroundColor;
 
   LinearPainter({
-    this.lineThickness,
-    this.progress,
-    this.progressColor,
-    this.backgroundColor,
+    required this.lineThickness,
+    required this.progress,
+    required this.progressColor,
+    required this.backgroundColor,
   }) {
     _paintBackground.color = backgroundColor;
     _paintBackground.style = PaintingStyle.stroke;

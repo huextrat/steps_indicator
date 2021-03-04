@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 class StepWidget {
   /// Return a simple step widget with [color] & [size]
   Widget generateSimpleStepWidget(
-      {@required Color color, @required double size}) {
+      {required Color color, required double size}) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(size),
       child: Container(
@@ -18,10 +18,10 @@ class StepWidget {
 
   /// Return a selected step widget with [colorIn], [colorOut], [stepSize] & [borderSize]
   Widget generateSelectedStepWidget(
-      {@required Color colorIn,
-      @required Color colorOut,
-      @required double stepSize,
-      @required double borderSize}) {
+      {required Color colorIn,
+      required Color colorOut,
+      required double stepSize,
+      required double borderSize}) {
     return ClipRRect(
         borderRadius: BorderRadius.circular(stepSize),
         child: Container(

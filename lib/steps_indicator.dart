@@ -61,10 +61,10 @@ class StepsIndicator extends StatefulWidget {
 
   /// Unselected step border size [default = 14]
   final double unselectedStepBorderSize;
-  final Widget doneStepWidget;
-  final Widget unselectedStepWidget;
-  final Widget selectedStepWidget;
-  final List<StepsIndicatorCustomLine> lineLengthCustomStep;
+  final Widget? doneStepWidget;
+  final Widget? unselectedStepWidget;
+  final Widget? selectedStepWidget;
+  final List<StepsIndicatorCustomLine>? lineLengthCustomStep;
 
   /// Enable line animation [default = false]
   final bool enableLineAnimation;
@@ -109,18 +109,18 @@ class _StepsIndicatorState extends State<StepsIndicator>
   bool _isPreviousStep = false;
 
   /// Line animation
-  AnimationController _animationControllerToNext;
-  Animation _animationToNext;
+  late AnimationController _animationControllerToNext;
+  late Animation _animationToNext;
   double _percentToNext = 0;
 
-  AnimationController _animationControllerToPrevious;
-  Animation _animationToPrevious;
+  late AnimationController _animationControllerToPrevious;
+  late Animation _animationToPrevious;
   double _percentToPrevious = 1;
 
   /// Step animation
-  AnimationController _animationControllerSelectedStep;
-  AnimationController _animationControllerDoneStep;
-  AnimationController _animationControllerUnselectedStep;
+  late AnimationController _animationControllerSelectedStep;
+  late AnimationController _animationControllerDoneStep;
+  late AnimationController _animationControllerUnselectedStep;
 
   /// Init all animation controller
   @override
@@ -318,7 +318,7 @@ class _StepsIndicatorState extends State<StepsIndicator>
 
       return AnimatedBuilder(
         animation: _animationControllerUnselectedStep,
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           final size = widget.unselectedStepSize *
               _animationControllerUnselectedStep.value;
           return Container(
@@ -354,7 +354,7 @@ class _StepsIndicatorState extends State<StepsIndicator>
 
       return AnimatedBuilder(
         animation: _animationControllerSelectedStep,
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           final size =
               widget.selectedStepSize * _animationControllerSelectedStep.value;
           return Container(
@@ -390,7 +390,7 @@ class _StepsIndicatorState extends State<StepsIndicator>
 
       return AnimatedBuilder(
         animation: _animationControllerDoneStep,
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           final size = widget.doneStepSize * _animationControllerDoneStep.value;
           return Container(
             width: size,
@@ -463,9 +463,9 @@ class _StepsIndicatorState extends State<StepsIndicator>
   double getLineLength(int i) {
     final nbStep = i + 1;
     if (widget.lineLengthCustomStep != null &&
-        widget.lineLengthCustomStep.isNotEmpty) {
-      if (widget.lineLengthCustomStep.any((it) => (it.nbStep - 1) == nbStep)) {
-        return widget.lineLengthCustomStep
+        widget.lineLengthCustomStep!.isNotEmpty) {
+      if (widget.lineLengthCustomStep!.any((it) => (it.nbStep - 1) == nbStep)) {
+        return widget.lineLengthCustomStep!
             .firstWhere((it) => (it.nbStep - 1) == nbStep)
             .length;
       }
@@ -479,5 +479,5 @@ class StepsIndicatorCustomLine {
   final int nbStep;
   final double length;
 
-  StepsIndicatorCustomLine({this.nbStep, this.length});
+  StepsIndicatorCustomLine({required this.nbStep, required this.length});
 }

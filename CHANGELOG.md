@@ -1,3 +1,8 @@
+## 1.3.0 - 2021-03-04
+
+- Null safety
+- Tested on Flutter 2.0 it's working on every platform
+
 ## [1.2.0] - 2021-02-17
 
 - You can now activate animations (`enableStepAnimation` & `enableLineAnimation`) for a more dynamic and prettier rendering.
